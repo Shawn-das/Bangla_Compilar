@@ -1,24 +1,24 @@
 public enum TokenType {
-    // Keywords
+    // --Keywords
     DHORO,      // ধরো  - variable declaration
     JODI,       // যদি  - if
     NAHOLE,     // নাহলে - else
     PRINT,      // দেখাও - print
 
-    // Literals
+    // --Literals
     ID,         // Bangla identifiers
     NUMBER,     // Bangla digits ০-৯
     STRING,     // "..." string literals
     TRUE,       // সত্য
     FALSE,      // মিথ্যা
 
-    // Arithmetic operators
+    // --Arithmetic operators
     PLUS,       // +
     MINUS,      // -
     MUL,        // *
     DIV,        // /
 
-    // Comparison operators
+    // --Comparison operators
     EQ,         // ==
     NEQ,        // !=
     LT,         // <

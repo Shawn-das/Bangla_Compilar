@@ -14,7 +14,7 @@ public class SymbolTable {
     private final Map<String, Entry> table = new LinkedHashMap<>();
 
     public void set(String name, VarType type, Object value) {
-        // Type-change check: a variable's type is locked after first declaration
+        // Type-change check: a variable's type is locked after first declaration.
         if (table.containsKey(name)) {
             VarType existing = table.get(name).type;
             if (existing != type) {
