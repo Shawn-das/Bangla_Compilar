@@ -1,39 +1,258 @@
 === STEP 1: LEXICAL ANALYSIS (TOKENS) ===
-Token{type=DHORO, lexeme='ধরো'}
-Token{type=ID, lexeme='ক'}
-Token{type=ASSIGN, lexeme='='}
-Token{type=NUMBER, lexeme='১০'}
-Token{type=SEMI, lexeme=';'}
-Token{type=DHORO, lexeme='ধরো'}
-Token{type=ID, lexeme='খ'}
-Token{type=ASSIGN, lexeme='='}
-Token{type=NUMBER, lexeme='২০'}
-Token{type=SEMI, lexeme=';'}
-Token{type=DHORO, lexeme='ধরো'}
-Token{type=ID, lexeme='ফলাফল'}
-Token{type=ASSIGN, lexeme='='}
-Token{type=ID, lexeme='ক'}
-Token{type=PLUS, lexeme='+'}
-Token{type=ID, lexeme='খ'}
-Token{type=SEMI, lexeme=';'}
-Token{type=EOF, lexeme=''}
+Token{type=DHORO, lexeme='ধরো', line=1}
+Token{type=ID, lexeme='ক', line=1}
+Token{type=ASSIGN, lexeme='=', line=1}
+Token{type=NUMBER, lexeme='১৫', line=1}
+Token{type=SEMI, lexeme=';', line=1}
+Token{type=DHORO, lexeme='ধরো', line=2}
+Token{type=ID, lexeme='খ', line=2}
+Token{type=ASSIGN, lexeme='=', line=2}
+Token{type=NUMBER, lexeme='৪', line=2}
+Token{type=SEMI, lexeme=';', line=2}
+Token{type=DHORO, lexeme='ধরো', line=3}
+Token{type=ID, lexeme='যোগ', line=3}
+Token{type=ASSIGN, lexeme='=', line=3}
+Token{type=ID, lexeme='ক', line=3}
+Token{type=PLUS, lexeme='+', line=3}
+Token{type=ID, lexeme='খ', line=3}
+Token{type=SEMI, lexeme=';', line=3}
+Token{type=DHORO, lexeme='ধরো', line=4}
+Token{type=ID, lexeme='বিয়োগ', line=4}
+Token{type=ASSIGN, lexeme='=', line=4}
+Token{type=ID, lexeme='ক', line=4}
+Token{type=MINUS, lexeme='-', line=4}
+Token{type=ID, lexeme='খ', line=4}
+Token{type=SEMI, lexeme=';', line=4}
+Token{type=DHORO, lexeme='ধরো', line=5}
+Token{type=ID, lexeme='গুণ', line=5}
+Token{type=ASSIGN, lexeme='=', line=5}
+Token{type=ID, lexeme='ক', line=5}
+Token{type=MUL, lexeme='*', line=5}
+Token{type=ID, lexeme='খ', line=5}
+Token{type=SEMI, lexeme=';', line=5}
+Token{type=DHORO, lexeme='ধরো', line=6}
+Token{type=ID, lexeme='ভাগ', line=6}
+Token{type=ASSIGN, lexeme='=', line=6}
+Token{type=ID, lexeme='ক', line=6}
+Token{type=DIV, lexeme='/', line=6}
+Token{type=ID, lexeme='খ', line=6}
+Token{type=SEMI, lexeme=';', line=6}
+Token{type=PRINT, lexeme='দেখাও', line=8}
+Token{type=ID, lexeme='যোগ', line=8}
+Token{type=SEMI, lexeme=';', line=8}
+Token{type=PRINT, lexeme='দেখাও', line=9}
+Token{type=ID, lexeme='বিয়োগ', line=9}
+Token{type=SEMI, lexeme=';', line=9}
+Token{type=PRINT, lexeme='দেখাও', line=10}
+Token{type=ID, lexeme='গুণ', line=10}
+Token{type=SEMI, lexeme=';', line=10}
+Token{type=PRINT, lexeme='দেখাও', line=11}
+Token{type=ID, lexeme='ভাগ', line=11}
+Token{type=SEMI, lexeme=';', line=11}
+Token{type=DHORO, lexeme='ধরো', line=13}
+Token{type=ID, lexeme='নাম', line=13}
+Token{type=ASSIGN, lexeme='=', line=13}
+Token{type=STRING, lexeme='Shawn', line=13}
+Token{type=SEMI, lexeme=';', line=13}
+Token{type=DHORO, lexeme='ধরো', line=14}
+Token{type=ID, lexeme='শুভেচ্ছা', line=14}
+Token{type=ASSIGN, lexeme='=', line=14}
+Token{type=STRING, lexeme='Wellcome ', line=14}
+Token{type=PLUS, lexeme='+', line=14}
+Token{type=ID, lexeme='নাম', line=14}
+Token{type=SEMI, lexeme=';', line=14}
+Token{type=PRINT, lexeme='দেখাও', line=15}
+Token{type=ID, lexeme='শুভেচ্ছা', line=15}
+Token{type=SEMI, lexeme=';', line=15}
+Token{type=JODI, lexeme='যদি', line=17}
+Token{type=LPAREN, lexeme='(', line=17}
+Token{type=ID, lexeme='গুণ', line=17}
+Token{type=GT, lexeme='>', line=17}
+Token{type=NUMBER, lexeme='৫০', line=17}
+Token{type=RPAREN, lexeme=')', line=17}
+Token{type=LBRACE, lexeme='{', line=17}
+Token{type=PRINT, lexeme='দেখাও', line=18}
+Token{type=STRING, lexeme='gunfhol 50 er besi', line=18}
+Token{type=SEMI, lexeme=';', line=18}
+Token{type=RBRACE, lexeme='}', line=19}
+Token{type=NAHOLE, lexeme='নাহলে', line=19}
+Token{type=LBRACE, lexeme='{', line=19}
+Token{type=PRINT, lexeme='দেখাও', line=20}
+Token{type=STRING, lexeme='gunfol 50 er kom', line=20}
+Token{type=SEMI, lexeme=';', line=20}
+Token{type=RBRACE, lexeme='}', line=21}
+Token{type=JODI, lexeme='যদি', line=23}
+Token{type=LPAREN, lexeme='(', line=23}
+Token{type=ID, lexeme='ক', line=23}
+Token{type=EQ, lexeme='==', line=23}
+Token{type=NUMBER, lexeme='১৫', line=23}
+Token{type=RPAREN, lexeme=')', line=23}
+Token{type=LBRACE, lexeme='{', line=23}
+Token{type=PRINT, lexeme='দেখাও', line=24}
+Token{type=STRING, lexeme='ka er value 15', line=24}
+Token{type=SEMI, lexeme=';', line=24}
+Token{type=RBRACE, lexeme='}', line=25}
+Token{type=JODI, lexeme='যদি', line=27}
+Token{type=LPAREN, lexeme='(', line=27}
+Token{type=ID, lexeme='খ', line=27}
+Token{type=NEQ, lexeme='!=', line=27}
+Token{type=NUMBER, lexeme='১০', line=27}
+Token{type=RPAREN, lexeme=')', line=27}
+Token{type=LBRACE, lexeme='{', line=27}
+Token{type=PRINT, lexeme='দেখাও', line=28}
+Token{type=STRING, lexeme='Kha er value 10 na', line=28}
+Token{type=SEMI, lexeme=';', line=28}
+Token{type=RBRACE, lexeme='}', line=29}
+Token{type=DHORO, lexeme='ধরো', line=31}
+Token{type=ID, lexeme='পাস', line=31}
+Token{type=ASSIGN, lexeme='=', line=31}
+Token{type=TRUE, lexeme='সত্য', line=31}
+Token{type=SEMI, lexeme=';', line=31}
+Token{type=JODI, lexeme='যদি', line=32}
+Token{type=LPAREN, lexeme='(', line=32}
+Token{type=ID, lexeme='পাস', line=32}
+Token{type=EQ, lexeme='==', line=32}
+Token{type=TRUE, lexeme='সত্য', line=32}
+Token{type=RPAREN, lexeme=')', line=32}
+Token{type=LBRACE, lexeme='{', line=32}
+Token{type=PRINT, lexeme='দেখাও', line=33}
+Token{type=STRING, lexeme='passed', line=33}
+Token{type=SEMI, lexeme=';', line=33}
+Token{type=RBRACE, lexeme='}', line=34}
+Token{type=NAHOLE, lexeme='নাহলে', line=34}
+Token{type=LBRACE, lexeme='{', line=34}
+Token{type=PRINT, lexeme='দেখাও', line=35}
+Token{type=STRING, lexeme='failed', line=35}
+Token{type=SEMI, lexeme=';', line=35}
+Token{type=RBRACE, lexeme='}', line=36}
+Token{type=EOF, lexeme='', line=36}
 
 === STEP 2: SYNTAX ANALYSIS (AST) ===
 Assignment: ক
-  Integer Value: ১০
+  Integer: ১৫
 Assignment: খ
-  Integer Value: ২০
-Assignment: ফলাফল
-  Binary Operator: +
+  Integer: ৪
+Assignment: যোগ
+  BinaryOp: +
     Variable: ক
     Variable: খ
+Assignment: বিয়োগ
+  BinaryOp: -
+    Variable: ক
+    Variable: খ
+Assignment: গুণ
+  BinaryOp: *
+    Variable: ক
+    Variable: খ
+Assignment: ভাগ
+  BinaryOp: /
+    Variable: ক
+    Variable: খ
+Print:
+  Variable: যোগ
+Print:
+  Variable: বিয়োগ
+Print:
+  Variable: গুণ
+Print:
+  Variable: ভাগ
+Assignment: নাম
+  String: "Shawn"
+Assignment: শুভেচ্ছা
+  BinaryOp: +
+    String: "Wellcome "
+    Variable: নাম
+Print:
+  Variable: শুভেচ্ছা
+If:
+  Condition:
+    BinaryOp: >
+      Variable: গুণ
+      Integer: ৫০
+  Then:
+    Print:
+      String: "gunfhol 50 er besi"
+  Else:
+    Print:
+      String: "gunfol 50 er kom"
+If:
+  Condition:
+    BinaryOp: ==
+      Variable: ক
+      Integer: ১৫
+  Then:
+    Print:
+      String: "ka er value 15"
+If:
+  Condition:
+    BinaryOp: !=
+      Variable: খ
+      Integer: ১০
+  Then:
+    Print:
+      String: "Kha er value 10 na"
+Assignment: পাস
+  Bool: সত্য
+If:
+  Condition:
+    BinaryOp: ==
+      Variable: পাস
+      Bool: সত্য
+  Then:
+    Print:
+      String: "passed"
+  Else:
+    Print:
+      String: "failed"
 
 === STEP 3: SEMANTIC ANALYSIS & SYMBOL TABLE ===
 [Status]: Type checking passed.
 [Status]: Scope check passed.
--------------------------
-Variable | Value (Bangla)
--------------------------
-ক : ১০
-খ : ২০
-ফলাফল : ৩০
+----------------------------------------
+Variable        Type     Value
+----------------------------------------
+ক               INT      ১৫
+খ               INT      ৪
+যোগ             INT      ১৯
+বিয়োগ          INT      ১১
+গুণ             INT      ৬০
+ভাগ             INT      ৩
+নাম             STRING   Shawn
+শুভেচ্ছা        STRING   Wellcome Shawn
+পাস             BOOL     true
+
+=== STEP 4: CODE GENERATION ===
+[Status]: Python file generated successfully: output.py
+
+--- Generated Python Code ---
+# Generated by Bangla Compiler
+# -*- coding: utf-8 -*-
+
+ক = 15
+খ = 4
+যোগ = ক + খ
+বিয়োগ = ক - খ
+গুণ = ক * খ
+ভাগ = ক / খ
+print(যোগ)
+print(বিয়োগ)
+print(গুণ)
+print(ভাগ)
+নাম = "Shawn"
+শুভেচ্ছা = "Wellcome " + নাম
+print(শুভেচ্ছা)
+if গুণ > 50:
+    print("gunfhol 50 er besi")
+else:
+    print("gunfol 50 er kom")
+if ক == 15:
+    print("ka er value 15")
+if খ != 10:
+    print("Kha er value 10 na")
+পাস = True
+if পাস == True:
+    print("passed")
+else:
+    print("failed")
+
+-----------------------------

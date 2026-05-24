@@ -1,78 +1,132 @@
-import java.util.List;
-import java.nio.file.Files;
-import java.nio.file.Paths;
-import java.io.PrintWriter;
-import java.io.IOException;
+import java.util.*;
+import java.nio.file.*;
+import java.io.*;
 
 public class Main {
-    public static void main(String[] args) {
-        String inputFilePath = "input.txt";
-        String outputFilePath = "output.txt";
-        try (PrintWriter out = new PrintWriter(outputFilePath)) {
-            try {
-                String source = Files.readString(Paths.get(inputFilePath));
-                Lexer lexer = new Lexer(source);
-                List<Token> tokens = lexer.scanTokens();
 
-                Parser parser = new Parser(tokens);
-                List<ASTNode> astNodes = parser.parse();
-                SymbolTable st = new SymbolTable();
-                SemanticAnalyzer analyzer = new SemanticAnalyzer(st);
-                analyzer.analyze(astNodes); 
-                out.println("=== STEP 1: LEXICAL ANALYSIS (TOKENS) ===");
-                for (Token t : tokens) {
-                    out.println(t.toString());
-                }
+    public static void main(String[] args) throws Exception {
+        String inputPath  = (args.length > 0) ? args[0] : "input.txt";
+        String reportPath = "output.txt";
+        String pyPath     = "output.py";
 
-                out.println("\n=== STEP 2: SYNTAX ANALYSIS (AST) ===");
-                for (ASTNode node : astNodes) {
-                    writeTreeToFile(node, 0, out);
-                }
+        // ── Read source ──────────────────────────────────────────────────────
+        String source;
+        try {
+            source = Files.readString(Paths.get(inputPath));
+        } catch (IOException e) {
+            System.err.println("Error: Cannot read '" + inputPath + "'");
+            return;
+        }
 
-                out.println("\n=== STEP 3: SEMANTIC ANALYSIS & SYMBOL TABLE ===");
-                out.println("[Status]: Type checking passed.");
-                out.println("[Status]: Scope check passed.");
-                out.println("-------------------------");
-                st.displayToFile(out);
-                
-                System.out.println("Process completed successfully. Check output.txt");
+        // ── Open report writer ───────────────────────────────────────────────
+        try (PrintWriter report = new PrintWriter(new OutputStreamWriter(
+                new FileOutputStream(reportPath), "UTF-8"))) {
 
-            } catch (RuntimeException semanticOrSyntaxError) {
-                // Catch errors like undefined variables or syntax mistakes
-                out.println("\n!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
-                out.println("COMPILER ERROR: " + semanticOrSyntaxError.getMessage());
-                out.println("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
-                System.err.println("Compiler error detected. Details written to output.txt");
-                
-            } catch (IOException e) {
-                out.println("FILE ERROR: Could not find or read '" + inputFilePath + "'");
-                System.err.println("File error written to output.txt");
+            // ── STEP 1: LEXICAL ANALYSIS ─────────────────────────────────────
+            Lexer      lexer  = new Lexer(source);
+            List<Token> tokens = lexer.scanTokens();
+
+            report.println("=== STEP 1: LEXICAL ANALYSIS (TOKENS) ===");
+            for (Token t : tokens) report.println(t);
+
+            // ── STEP 2: SYNTAX ANALYSIS ──────────────────────────────────────
+            report.println("\n=== STEP 2: SYNTAX ANALYSIS (AST) ===");
+            Parser       parser   = new Parser(tokens);
+            List<ASTNode> astNodes = parser.parse();
+
+            // Report parse errors (recovered)
+            List<String> parseErrors = parser.getErrors();
+            if (!parseErrors.isEmpty()) {
+                report.println("[Syntax Errors Recovered]:");
+                for (String err : parseErrors) report.println("  !! " + err);
+                report.println();
             }
 
-        } catch (Exception fatalError) {
-            // This catches errors in creating the output.txt file itself
-            System.err.println("Fatal Error: Could not write to output file. " + fatalError.getMessage());
+            for (ASTNode node : astNodes) writeTree(node, 0, report);
+
+            // ── STEP 3: SEMANTIC ANALYSIS ────────────────────────────────────
+            report.println("\n=== STEP 3: SEMANTIC ANALYSIS & SYMBOL TABLE ===");
+            SymbolTable      st       = new SymbolTable();
+            SemanticAnalyzer analyzer = new SemanticAnalyzer(st);
+
+            boolean semanticOk = true;
+            try {
+                analyzer.analyze(astNodes);
+                report.println("[Status]: Type checking passed.");
+                report.println("[Status]: Scope check passed.");
+            } catch (RuntimeException e) {
+                semanticOk = false;
+                report.println("[SEMANTIC ERROR]: " + e.getMessage());
+            }
+
+            report.println("-".repeat(40));
+            st.displayToFile(report);
+
+            // ── STEP 4: CODE GENERATION ──────────────────────────────────────
+            report.println("\n=== STEP 4: CODE GENERATION ===");
+            if (!semanticOk) {
+                report.println("[Skipped due to semantic errors]");
+                System.err.println("Semantic error(s) found. Check output.txt");
+            } else {
+                CodeGenerator gen    = new CodeGenerator();
+                String        pyCode = gen.generate(astNodes);
+
+                // Write Python file
+                try (PrintWriter pyOut = new PrintWriter(
+                        new OutputStreamWriter(new FileOutputStream(pyPath), "UTF-8"))) {
+                    pyOut.print(pyCode);
+                }
+
+                report.println("[Status]: Python file generated successfully: " + pyPath);
+                report.println("\n--- Generated Python Code ---");
+                report.println(pyCode);
+                report.println("-----------------------------");
+
+                System.out.println("Compilation successful!");
+                System.out.println("  Report  -> " + reportPath);
+                System.out.println("  Python  -> " + pyPath);
+                System.out.println();
+                System.out.println("Run the program with:  python3 " + pyPath);
+            }
         }
     }
 
-    public static void writeTreeToFile(ASTNode node, int indent, PrintWriter out) {
+    // ── AST pretty-printer ───────────────────────────────────────────────────
+    static void writeTree(ASTNode node, int indent, PrintWriter out) {
+        if (node == null) return;
         String p = "  ".repeat(indent);
+
         if (node instanceof AssignNode) {
             AssignNode a = (AssignNode) node;
             out.println(p + "Assignment: " + a.name);
-            writeTreeToFile(a.expr, indent + 1, out);
+            writeTree(a.expr, indent + 1, out);
+        } else if (node instanceof IfNode) {
+            IfNode ifn = (IfNode) node;
+            out.println(p + "If:");
+            out.println(p + "  Condition:");
+            writeTree(ifn.condition, indent + 2, out);
+            out.println(p + "  Then:");
+            for (ASTNode s : ifn.thenBranch) writeTree(s, indent + 2, out);
+            if (ifn.elseBranch != null) {
+                out.println(p + "  Else:");
+                for (ASTNode s : ifn.elseBranch) writeTree(s, indent + 2, out);
+            }
+        } else if (node instanceof PrintNode) {
+            out.println(p + "Print:");
+            writeTree(((PrintNode) node).expr, indent + 1, out);
         } else if (node instanceof BinOpNode) {
             BinOpNode b = (BinOpNode) node;
-            out.println(p + "Binary Operator: " + b.operator);
-            writeTreeToFile(b.left, indent + 1, out);
-            writeTreeToFile(b.right, indent + 1, out);
+            out.println(p + "BinaryOp: " + b.operator);
+            writeTree(b.left,  indent + 1, out);
+            writeTree(b.right, indent + 1, out);
         } else if (node instanceof VarNode) {
             out.println(p + "Variable: " + ((VarNode) node).name);
         } else if (node instanceof NumberNode) {
-            int val = ((NumberNode) node).value;
-            String bVal = SemanticAnalyzer.convertEnglishToBangla(val);
-            out.println(p + "Integer Value: " + bVal);
+            out.println(p + "Integer: " + SemanticAnalyzer.convertEnglishToBangla(((NumberNode) node).value));
+        } else if (node instanceof StringNode) {
+            out.println(p + "String: \"" + ((StringNode) node).value + "\"");
+        } else if (node instanceof BoolNode) {
+            out.println(p + "Bool: " + (((BoolNode) node).value ? "সত্য" : "মিথ্যা"));
         }
     }
 }
-
